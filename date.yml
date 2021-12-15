@@ -1,0 +1,24 @@
+- name: Install and start docker
+  hosts: all
+  become: true
+  vars:
+    exp_date: "2021-12-14"
+  tasks:
+    - name: date check 1
+      debug:
+        msg: "Exiting after date {{ ansible_date_time.date }} {{ exp_date }}"
+    - name: date check
+      fail:
+        msg: "Exiting after date"
+      when: 'ansible_date_time.date > exp_date'
+
+    - name: Debug msg
+      debug:
+        msg: "Installing docker here"
+    - name: Install docker
+      apt: name=docker.io state=latest
+    - name: Start docker service
+      service: name=docker state=started
+    - name: Start flask app on port 80
+      shell:
+        cmd: docker run -dit -p 80:4080 ashok25/flaskapp:v2.0
