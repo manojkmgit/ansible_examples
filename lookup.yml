@@ -1,10 +1,32 @@
 - name: Lookup test
   hosts: node1
   vars:
-    motd_value: "{{ lookup('file', '/tmp/test.txt') }}"
+    file_data_lookup: "{{ lookup('file', '/tmp/test.txt') }}"
+    file_data_query: "{{ query('file', '/tmp/test.txt') }}"
+    file_data_lookup_list: "{{ lookup('file', '/tmp/test.txt', wantlist=True) }}"
+    multi_key_dict:
+      key-1: "value-1"
+      key-2: "value-2"
   tasks:
   - name: Here show lookup
     debug:
-      msg: "motd value is {{ motd_value }}"
+      msg: "Data in file via lookup is {{ file_data_lookup }}"
+  - name: Here show query
+    debug:
+      msg: "Data in file via query is {{ file_data_query }}"
+  - name: Here show lookup list
+    debug:
+      msg: "Data in file via lookup list is {{ file_data_lookup_list }}"
+  - name: Here lookup on dict
+    vars:
+      dict_data: "{{ lookup('dict', multi_key_dict) }}"
+    debug:
+      msg: "Data in file via query is {{ dict_data }}"
+  - name: Here lookup on dict
+    vars:
+      dict_data: "{{ query('dict', multi_key_dict) }}"
+    debug:
+      msg: "Data in file via query is {{ dict_data }}"
+       
 
 
