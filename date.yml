@@ -1,7 +1,17 @@
 - name: Install and start docker
   hosts: all
   become: true
+  vars:
+    exp_date: "2021-12-14"
   tasks:
+    - name: date check 1
+      debug:
+        msg: "Exiting after date {{ ansible_date_time.date }} {{ exp_date }}"
+    - name: date check
+      fail:
+        msg: "Exiting after date"
+      when: 'ansible_date_time.date > exp_date'
+          
     - name: Debug msg
       debug:
         msg: "Installing docker here"

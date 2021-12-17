@@ -1,0 +1,10 @@
+- name: Lookup test
+  hosts: node1
+  vars:
+    motd_value: "{{ lookup('file', '/tmp/test.txt') }}"
+  tasks:
+  - name: Here show lookup
+    debug:
+      msg: "motd value is {{ motd_value }}"
+
+
