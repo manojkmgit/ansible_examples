@@ -27,6 +27,15 @@
       dict_data: "{{ query('dict', multi_key_dict) }}"
     debug:
       msg: "Data in file via query is {{ dict_data }}"
+  - name: get env variable values
+    debug:
+      msg: "{{ lookup('env','HOME') }} is an environment variable"
+  - name: url lookup it splits lines by default
+    debug:
+      msg: "{{ lookup('url', 'http://checkip.amazonaws.com/', wantlist=True) }}"
+  - name: url lookup it splits lines by default another url
+    debug: msg= "{{ item }}"
+    loop: "{{ lookup('url', 'http://icanhazip.com/', wantlist=True) }}"
        
 
 
